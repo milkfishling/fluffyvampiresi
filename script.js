@@ -32,6 +32,8 @@ var qtt = 50;
 
 function setup(){
   createCanvas(WIDTH, HEIGHT);
+  textAlign(LEFT, BOTTOM);
+  textSize(16);
   background(0);
   noStroke();
   fill(200, 182, 106);
@@ -43,10 +45,11 @@ function setup(){
 }
 
 function mousePressed(){
-  for(counter = 0; counter < qtt; counter++){
-    let colour = color(random(255), random(255), random(255));
-    ballfamily[counter] = new Ball(mouseX, mouseY, random(15, 30), random(2, 9), names[int(random(names.length))], colour);
-  }
+  if(mouseX < WIDTH && mouseX > 0 && mouseY < HEIGHT && mouseY > 0)
+    for(counter = 0; counter < qtt; counter++){
+      let colour = color(random(255), random(255), random(255));
+      ballfamily[counter] = new Ball(mouseX, mouseY, random(15, 30), random(2, 9), names[int(random(names.length))], colour);
+    }
 }
 
 function draw(){
@@ -54,7 +57,9 @@ function draw(){
   for(counter = 0; counter < qtt; counter++){
     ballfamily[counter].display();
     ballfamily[counter].movement();
-    if(pow(mouseX - ballfamily[counter].x, 2) + pow(mouseY - ballfamily[counter].y, 2) <= pow(ballfamily[counter].s, 2))
-      console.log(ballfamily[counter].name);
+    if(pow(mouseX - ballfamily[counter].x, 2) + pow(mouseY - ballfamily[counter].y, 2) <= pow(ballfamily[counter].s, 2)){
+      fill(250);
+      text(ballfamily[counter].name, mouseX, mouseY);
+    }
   }
 }
