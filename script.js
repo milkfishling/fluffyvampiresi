@@ -1,65 +1,24 @@
-const WIDTH = 700, HEIGHT = 600;
-
-class Ball{
-  constructor(x_, y_, s_, speed_, name_, colour_){
-    this.x = x_;
-    this.y = y_;
-    this.s = s_;
-    this.speed = speed_;
-    this.name = name_;
-    this.colour = colour_;
-  }
-  display(){
-    fill(this.colour);
-    ellipse(this.x, this.y, this.s, this.s);
-  }
-  movement(){
-    let tx = random(-this.speed, this.speed);
-    while(this.x + tx >= WIDTH || this.x + tx <= 0)
-      tx = random(-this.speed, this.speed);
-    this.x += tx;
-    let ty = random(-this.speed, this.speed);
-    while(this.y + ty >= HEIGHT || this.y + ty <= 0)
-      ty = random(-this.speed, this.speed);
-    this.y += ty;
-  }
-}
-
-var ballfamily = [];
-var names = ["bob", "lily", "phill", "robert", "catherine", "migo", "roko", "jabu", "ana", "fred", "dan", "hichi", "som"];
-
-var qtt = 50;
-
+var player;
+var PI = 3.14;
 function setup(){
-  createCanvas(WIDTH, HEIGHT);
-  textAlign(LEFT, BOTTOM);
-  textSize(16);
-  background(0);
-  noStroke();
-  fill(200, 182, 106);
-  let counter;
-  for(counter = 0; counter < qtt; counter++){
-    let colour = color(random(255), random(255), random(255));
-    ballfamily.push(new Ball(350, 300, random(15, 30), random(2, 9), names[int(random(names.length ))], colour));
-  }
+  frameRate(30);
+  gameScreen = createCanvas(600, 600);
+  player = new Entity(width/2, height/2, 0, 60,
+    [
+      [[2, 'assets/ship.png'], [2, 'assets/tank_huge.png']],
+      [[5, 'assets/explosionSmoke1.png'], [5, 'assets/explosionSmoke2.png'],
+       [5, 'assets/explosionSmoke3.png'], [5, 'assets/explosionSmoke4.png'],
+       [5, 'assets/explosionSmoke5.png']]
+    ], 0);
 }
 
 function mousePressed(){
-  if(mouseX < WIDTH && mouseX > 0 && mouseY < HEIGHT && mouseY > 0)
-    for(counter = 0; counter < qtt; counter++){
-      let colour = color(random(255), random(255), random(255));
-      ballfamily[counter] = new Ball(mouseX, mouseY, random(15, 30), random(2, 9), names[int(random(names.length))], colour);
-    }
+  if(player.state == 0) player.state = 1;
+  else player.state = 0;
 }
 
 function draw(){
-  background(0);
-  for(counter = 0; counter < qtt; counter++){
-    ballfamily[counter].display();
-    ballfamily[counter].movement();
-    if(pow(mouseX - ballfamily[counter].x, 2) + pow(mouseY - ballfamily[counter].y, 2) <= pow(ballfamily[counter].s, 2)){
-      fill(250);
-      text(ballfamily[counter].name, mouseX, mouseY);
-    }
-  }
+  background(80);
+  player.display();
+  player.movement(0, (PI/2) + atan2(mouseY - player.position.y,mouseX - player.position.x));
 }
