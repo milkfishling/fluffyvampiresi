@@ -1,16 +1,4 @@
 
-function setup(){
-  frameRate(30);
-  createCanvas(500, 500);
-}
-function draw(){
-  background(0);
-  fred.isClicked();
-  bob.isClicked();
-  bob.display();
-  fred.display();
-}
-
 class Button{
   constructor(x_, y_, wid_, len_){
     this.x = x_;
@@ -38,6 +26,6 @@ class Button{
   }
 }
 
-bob = new Button(10, 15, 100, 200);
-fred = new Button(250, 250, 100, 100);
-console.log('BOB: ' + bob.wid + '\n FRED: ' + fred.wid);
+// bob = new Button(10, 15, 100, 200);
+// fred = new Button(250, 250, 100, 100);
+// console.log('BOB: ' + bob.wid + '\n FRED: ' + fred.wid);
